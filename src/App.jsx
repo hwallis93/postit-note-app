@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Messages from "./Messages";
 import Adder from "./Adder";
+import WhoAmI from "./WhoAmI";
 
 import "./App.css";
 
@@ -19,6 +20,9 @@ class App extends Component {
           <div className="App--content-item">
             <p className="App--content-item-header">Messages</p>
             <Messages />
+          </div>
+          <div>
+            <WhoAmI />
           </div>
         </div>
       </div>

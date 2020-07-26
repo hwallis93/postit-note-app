@@ -18,7 +18,16 @@ const shared = (state = { messages: [] }, action) => {
   }
 };
 
-export const reducer = remoteCombineReducers({ foo }, { shared });
+const name = (state = { name: "no name" }, action) => {
+  switch (action.type) {
+    case "NAME":
+      return { name: action.name };
+    default:
+      return state;
+  }
+};
+
+export const reducer = remoteCombineReducers({ foo, name }, { shared });
 
 export const say = (message) =>
   remoteAction({
@@ -29,4 +38,9 @@ export const say = (message) =>
 export const add = (value) => ({
   type: "ADD",
   value,
+});
+
+export const updateName = (name) => ({
+  type: "NAME",
+  name,
 });
