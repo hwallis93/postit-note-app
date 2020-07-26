@@ -1,9 +1,5 @@
-# remote-redux
+# Post-it note game
 
-Build project with:
+Allow people to play postit note game remotely
 
-<code>npm run build</code>
-
-Start server at [http://localhost:3000]() with:
-
-<code>npm run start</code>
+Infrastructure all forked from [remote-redux](https://github.com/tobhult/remote-redux-app) by [tobhult](https://github.com/tobhult/)
