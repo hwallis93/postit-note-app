@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Messages from "./Messages";
 import WhoAmI from "./WhoAmI";
+import PlayerList from "./PlayerList";
 
 import "./App.css";
 
@@ -18,6 +19,9 @@ class App extends Component {
           </div>
           <div>
             <WhoAmI />
+          </div>
+          <div>
+            <PlayerList />
           </div>
         </div>
       </div>

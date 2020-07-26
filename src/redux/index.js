@@ -8,6 +8,15 @@ const shared = (state = { messages: [] }, action) => {
   }
 };
 
+const players = (state = { names: [] }, action) => {
+  switch (action.type) {
+    case "ADD_PLAYER":
+      return { names: [...state.names, action.name] };
+    default:
+      return state;
+  }
+};
+
 const name = (state = { name: "no name" }, action) => {
   switch (action.type) {
     case "NAME":
@@ -17,7 +26,7 @@ const name = (state = { name: "no name" }, action) => {
   }
 };
 
-export const reducer = remoteCombineReducers({ name }, { shared });
+export const reducer = remoteCombineReducers({ name }, { shared, players });
 
 export const say = (message) =>
   remoteAction({
@@ -25,7 +34,15 @@ export const say = (message) =>
     message,
   });
 
-export const updateName = (name) => ({
+// Set player's local name
+export const updateLocalName = (name) => ({
   type: "NAME",
   name,
 });
+
+// Add a player name to global list of players
+export const addPlayer = (name) =>
+  remoteAction({
+    type: "ADD_PLAYER",
+    name,
+  });
