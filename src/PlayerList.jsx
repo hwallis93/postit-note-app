@@ -1,23 +1,19 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-class PlayerList extends React.Component {
-  render() {
-    const { players } = this.props;
+const PlayerList = () => {
+  const { players } = useSelector((state) => state.players);
 
-    return (
+  return (
+    <div>
+      <div> --- Players --- </div>
       <div>
         {players.map((player, index) => (
-          <li key={index}>{player}</li>
+          <li key={index}>{player.name}</li>
         ))}
       </div>
-    );
-  }
-}
-const mapStateToProps = (state) => {
-  return {
-    players: state.players.names,
-  };
+    </div>
+  );
 };
 
-export default connect(mapStateToProps)(PlayerList);
+export default PlayerList;
