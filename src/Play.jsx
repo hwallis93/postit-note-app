@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { assignWord, activePlayerSelector } from "./redux/index";
+import { setTurn, activePlayerSelector } from "./redux/index";
 import PlayerList from "./PlayerList";
 
 const Play = () => {
@@ -19,13 +19,29 @@ const Play = () => {
 
   const localPlayerIsActive = localPlayer.id === activePlayer.id;
 
+  const handleNo = () => {
+    const playerIndex = players.findIndex(
+      (player) => player.id === activePlayer.id
+    );
+    let nextPlayerIndex;
+    if (playerIndex < players.length - 1) {
+      nextPlayerIndex = playerIndex + 1;
+    } else {
+      nextPlayerIndex = 0;
+    }
+
+    dispatch(setTurn(players[nextPlayerIndex].id));
+  };
+
+  const handleCorrectGuess = () => {};
+
   const turnDetails = () => {
     if (localPlayerIsActive) {
       return (
         <div>
           <div>It's your turn!</div>
-          <button>I got a no</button>
-          <button>I guessed the answer!</button>
+          <button onClick={handleNo}>I got a no</button>
+          <button onClick={handleCorrectGuess}>I guessed the answer!</button>
         </div>
       );
     } else {
