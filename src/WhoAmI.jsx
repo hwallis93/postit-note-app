@@ -5,7 +5,6 @@ import {
   addPlayer,
   advanceLifecycle,
   assignAuthor,
-  playerFromId,
 } from "./redux/index";
 import PlayerList from "./PlayerList";
 
@@ -63,7 +62,7 @@ const WhoAmI = () => {
       const target = allPlayers[i];
       const author =
         i === allPlayers.length - 1 ? allPlayers[0] : allPlayers[i + 1];
-      dispatch(assignAuthor(target.id, author.name));
+      dispatch(assignAuthor(target.id, author.name, author.id));
     }
     dispatch(advanceLifecycle("WRITE_WORDS"));
   };
