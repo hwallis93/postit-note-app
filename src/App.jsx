@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import WhoAmI from "./WhoAmI";
 import WriteWords from "./WriteWords";
+import Play from "./Play";
 
 import "./App.css";
 import { useSelector } from "react-redux";
@@ -15,7 +16,7 @@ const App = () => {
       case "WRITE_WORDS":
         return <WriteWords />;
       case "PLAY":
-        return <div>TIME TO PLAY A GAME</div>;
+        return <Play />;
       default:
         return <span>No lifecycle set!</span>;
     }

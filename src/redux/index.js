@@ -174,3 +174,11 @@ export const guessedAnswer = (id) =>
   });
 
 // Selectors
+export const activePlayerSelector = (state) => {
+  for (const player of state.players.players) {
+    if (player.id === state.activeTurn.activeTurn) {
+      return player;
+    }
+  }
+  return null;
+};

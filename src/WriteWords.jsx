@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { assignWord } from "./redux/index";
 import PlayerList from "./PlayerList";
 
-import * as S from "./WhoAmIStyles";
+import * as S from "./WriteWordsStyles";
 
 const WriteWords = () => {
   const dispatch = useDispatch();
