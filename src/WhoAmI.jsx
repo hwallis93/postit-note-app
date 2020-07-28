@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  updateLocalName,
+  updateLocalId,
   addPlayer,
   advanceLifecycle,
   assignAuthor,
+  playerFromId,
 } from "./redux/index";
 import PlayerList from "./PlayerList";
 
@@ -14,18 +15,28 @@ import * as S from "./WhoAmIStyles";
 const WhoAmI = () => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
-  const { name } = useSelector((state) => state.name);
+  const { localId } = useSelector((state) => state.localId);
   const { players } = useSelector((state) => state.players);
+
+  let localPlayer = null;
+  players.some((player) => {
+    if (player.id === localId) {
+      localPlayer = player;
+      return true;
+    }
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addPlayer(text));
-    dispatch(updateLocalName(text));
+    const id = `${Math.random()}`;
+
+    dispatch(addPlayer(text, id));
+    dispatch(updateLocalId(id));
     setText("");
   };
 
   const formOrGreeting = () => {
-    if (name == "no name") {
+    if (localId === null) {
       return (
         <form onSubmit={handleSubmit}>
           <label>
@@ -40,7 +51,7 @@ const WhoAmI = () => {
         </form>
       );
     } else {
-      return <span>Hello {name}!</span>;
+      return <span>Hello {localPlayer?.name}!</span>;
     }
   };
 

@@ -19,15 +19,13 @@ const lifecycle = (state = { lifecycle: "GET_PLAYERS" }, action) => {
 
 const players = (state = { players: [] }, action) => {
   switch (action.type) {
-    case "ADD_PLAYER":
-      const { name } = action;
+    case "ADD_PLAYER": {
+      const { name, id } = action;
       return {
-        players: [
-          ...state.players,
-          { name, id: `${Math.random()}`, word: "", author: "" },
-        ],
+        players: [...state.players, { name, id, word: "", author: "" }],
       };
-    case "ASSIGN_AUTHOR":
+    }
+    case "ASSIGN_AUTHOR": {
       const { targetId, author } = action;
       const players = cloneDeep(state.players);
 
@@ -41,36 +39,55 @@ const players = (state = { players: [] }, action) => {
       return {
         players: newPlayers,
       };
-    case "WRITE_WORD":
-      return state;
+    }
+    case "ASSIGN_WORD": {
+      const { targetId, word } = action;
+
+      const players = cloneDeep(state.players);
+      const newPlayers = players.map((player) => {
+        if (player.id === targetId) {
+          player.word = word;
+        }
+        return player;
+      });
+
+      return {
+        players: newPlayers,
+      };
+    }
 
     default:
       return state;
   }
 };
 
-const name = (state = { name: "no name" }, action) => {
+const localId = (state = { localId: null }, action) => {
   switch (action.type) {
-    case "NAME":
-      return { name: action.name };
+    case "LOCAL_ID":
+      const { id } = action;
+      return { localId: id };
     default:
       return state;
   }
 };
 
-export const reducer = remoteCombineReducers({ name }, { players, lifecycle });
+export const reducer = remoteCombineReducers(
+  { localId },
+  { players, lifecycle }
+);
 
-// Set player's local name
-export const updateLocalName = (name) => ({
-  type: "NAME",
-  name,
+// Set player's local ID
+export const updateLocalId = (id) => ({
+  type: "LOCAL_ID",
+  id,
 });
 
 // Add a player name to global list of players
-export const addPlayer = (name) =>
+export const addPlayer = (name, id) =>
   remoteAction({
     type: "ADD_PLAYER",
     name,
+    id,
   });
 
 // Add a player name to global list of players
@@ -91,3 +108,29 @@ export const assignAuthor = (targetId, author) =>
     targetId,
     author,
   });
+
+/**
+ * payload = {targetId, author}
+ * @param {string} targetId // ID of player being given an author
+ * @param {string} word // Word to be guessed
+ */
+export const assignWord = (targetId, word) =>
+  remoteAction({
+    type: "ASSIGN_WORD",
+    targetId,
+    author,
+  });
+
+// Selectors
+export const playerFromId = (state) => (id) => {
+  let targetPlayer;
+  console.log(id);
+  console.log(state);
+  state.players.players.some((player) => {
+    if (player.id === id) {
+      targetPlayer = player;
+      return true;
+    }
+  });
+  return targetPlayer;
+};
