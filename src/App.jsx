@@ -14,6 +14,8 @@ const App = () => {
         return <WhoAmI />;
       case "WRITE_WORDS":
         return <WriteWords />;
+      case "PLAY":
+        return <div>TIME TO PLAY A GAME</div>;
       default:
         return <span>No lifecycle set!</span>;
     }

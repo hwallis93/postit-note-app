@@ -1,7 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { advanceLifecycle, setTurn } from "./redux/index";
 
 const PlayerList = () => {
+  const dispatch = useDispatch();
   const { localId } = useSelector((state) => state.localId);
   const { players } = useSelector((state) => state.players);
   const { lifecycle } = useSelector((state) => state.lifecycle);
@@ -18,6 +21,15 @@ const PlayerList = () => {
         );
       }
       case "WRITE_WORDS": {
+        const allWritten = players.every((player) => {
+          return player.word !== "";
+        });
+
+        if (allWritten) {
+          dispatch(setTurn(players[0].id));
+          dispatch(advanceLifecycle("PLAY"));
+        }
+
         return (
           <div>
             {players.map((player, index) => {
