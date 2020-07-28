@@ -115,7 +115,6 @@ export const assignAuthor = (targetId, authorName, authorId) =>
   });
 
 /**
- * payload = {targetId, author}
  * @param {string} targetId // ID of player being given an author
  * @param {string} word // Word to be guessed
  */
@@ -123,7 +122,7 @@ export const assignWord = (targetId, word) =>
   remoteAction({
     type: "ASSIGN_WORD",
     targetId,
-    author,
+    word,
   });
 
 // Selectors

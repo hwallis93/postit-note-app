@@ -1,6 +1,4 @@
 # TODO
 
-- Make sure this can be hosted somewhere and still "works"
-- Refactor existing code to use hooks and functional components
-- Design state store
-- Design UI
+- Add stage 3 (playing)
+- Add something that handles people losing connection or refreshing
