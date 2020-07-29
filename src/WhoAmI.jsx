@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   updateLocalId,
@@ -16,6 +16,10 @@ const WhoAmI = () => {
   const [text, setText] = useState("");
   const { localId } = useSelector((state) => state.localId);
   const { players } = useSelector((state) => state.players);
+
+  useEffect(() => {
+    dispatch(updateLocalId(""));
+  }, []);
 
   let localPlayer = null;
   players.some((player) => {
@@ -35,19 +39,22 @@ const WhoAmI = () => {
   };
 
   const formOrGreeting = () => {
-    if (localId === null) {
+    if (localId === "") {
       return (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <S.FormWrapper>
+          <form onSubmit={handleSubmit}>
+            <S.Heading>Name</S.Heading>
+            <S.Entry>
+              <S.Box
+                type="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <span style={{ paddingLeft: "5px" }}></span>
+              <S.Submit type="submit" value="Play" />
+            </S.Entry>
+          </form>
+        </S.FormWrapper>
       );
     } else {
       return <span>Hello {localPlayer?.name}!</span>;
@@ -69,12 +76,15 @@ const WhoAmI = () => {
 
   return (
     <S.Wrapper>
-      <div>{formOrGreeting()}</div>
-      <div>
+      <div style={{ height: "40px" }}>{formOrGreeting()}</div>
+      <div
+        style={{
+          paddingLeft: "30px",
+          paddingTop: "10px",
+          paddingBottom: "5px",
+        }}
+      >
         <button onClick={allPlayersIn}>All players in</button>
-      </div>
-      <div>
-        <PlayerList />
       </div>
     </S.Wrapper>
   );

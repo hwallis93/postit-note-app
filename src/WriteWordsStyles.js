@@ -7,8 +7,21 @@ export const Wrapper = styled.div`
 
   display: flex;
   flex-flow: column;
+`;
 
-  div {
-    padding: 5px;
-  }
+export const FormWrapper = styled.div`
+  padding-top: 5px;
+`;
+export const Heading = styled.div``;
+export const Box = styled.input`
+  border-radius: 100px;
+  outline: none;
+  padding-left: 5px;
+`;
+export const Submit = styled.input`
+  border-radius: 100px;
+  background: #f7f2a8;
+`;
+export const Entry = styled.div`
+  display: flex;
 `;

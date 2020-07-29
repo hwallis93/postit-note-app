@@ -1,15 +1,28 @@
 import React, { Component } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import * as S from "./AppStyles";
 import WhoAmI from "./WhoAmI";
 import WriteWords from "./WriteWords";
 import Play from "./Play";
+import Rejoin from "./Rejoin";
+import PlayerList from "./PlayerList";
 
-import "./App.css";
-import { useSelector } from "react-redux";
+import { resetRemote } from "./redux/index";
 
 const App = () => {
+  const dispatch = useDispatch();
   const { lifecycle } = useSelector((state) => state.lifecycle);
+  const { localId } = useSelector((state) => state.localId);
+
+  const resetGame = () => {
+    dispatch(resetRemote());
+  };
 
   const activeComponent = () => {
+    if (lifecycle !== "GET_PLAYERS" && localId === "") {
+      return <Rejoin />;
+    }
     switch (lifecycle) {
       case "GET_PLAYERS":
         return <WhoAmI />;
@@ -20,7 +33,7 @@ const App = () => {
       case "GAME_OVER":
         return (
           <div>
-            Game over! <button>Play again</button>
+            Game over! <button onClick={resetGame}>Play again</button>
           </div>
         );
       default:
@@ -30,8 +43,17 @@ const App = () => {
 
   return (
     <div>
-      <header>The posit note game</header>
-      <div>{activeComponent()}</div>
+      <div>
+        <S.Title>THE POST-IT NOTE GAME</S.Title>
+      </div>
+      <div>
+        <S.Body>{activeComponent()}</S.Body>
+      </div>
+      <div>
+        <S.Players>
+          <PlayerList />
+        </S.Players>
+      </div>
     </div>
   );
 };

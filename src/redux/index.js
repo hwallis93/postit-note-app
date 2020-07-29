@@ -86,7 +86,7 @@ const players = (state = { players: [] }, action) => {
   }
 };
 
-const localId = (state = { localId: null }, action) => {
+const localId = (state = { localId: "" }, action) => {
   switch (action.type) {
     case "LOCAL_ID":
       const { id } = action;
@@ -106,10 +106,13 @@ const activeTurn = (state = { activeTurn: null }, action) => {
   }
 };
 
-export const reducer = remoteCombineReducers(
+const gameReducer = remoteCombineReducers(
   { localId },
   { players, lifecycle, activeTurn }
 );
+
+export const reducer = (state, action) =>
+  gameReducer(action.type === "RESET" ? undefined : state, action);
 
 // Set player's local ID
 export const updateLocalId = (id) => ({
@@ -171,6 +174,11 @@ export const guessedAnswer = (targetId) =>
   remoteAction({
     type: "GUESSED_ANSWER",
     targetId,
+  });
+
+export const resetRemote = () =>
+  remoteAction({
+    type: "RESET",
   });
 
 // Selectors

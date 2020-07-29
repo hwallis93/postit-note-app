@@ -35,23 +35,34 @@ const WriteWords = () => {
   const writeWordOrRelax = () => {
     if (playerTarget.word === "") {
       return (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Word:
-            <input
-              type="text"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <div>
+          <div>
+            Please write a word for{" "}
+            <span style={{ fontWeight: "bold" }}> {playerTarget.name}</span>
+          </div>
+          <S.FormWrapper>
+            <form onSubmit={handleSubmit}>
+              <S.Entry>
+                <S.Box
+                  type="text"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />
+                <span style={{ paddingLeft: "5px" }}></span>
+                <S.Submit type="submit" value="Send" />
+              </S.Entry>
+            </form>
+          </S.FormWrapper>
+        </div>
       );
     } else {
       return (
         <span>
-          You wrote {playerTarget.word} for {playerTarget.name}. Relax while
-          everyone else writes their words
+          You wrote{" "}
+          <span style={{ fontWeight: "bold", color: "green" }}>
+            {playerTarget.word}
+          </span>{" "}
+          for {playerTarget.name}. Relax while everyone else writes their words
         </span>
       );
     }
@@ -60,9 +71,6 @@ const WriteWords = () => {
   return (
     <S.Wrapper>
       <div>{writeWordOrRelax()}</div>
-      <div>
-        <PlayerList />
-      </div>
     </S.Wrapper>
   );
 };

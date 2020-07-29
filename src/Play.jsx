@@ -72,14 +72,7 @@ const Play = () => {
     }
   };
 
-  return (
-    <div>
-      <div>{turnDetails()}</div>
-      <div>
-        <PlayerList />
-      </div>
-    </div>
-  );
+  return <div>{turnDetails()}</div>;
 };
 
 export default Play;

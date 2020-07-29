@@ -1,24 +1,32 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import * as S from "./PlayerListStyles";
 import { advanceLifecycle, setTurn, activePlayerSelector } from "./redux/index";
 
 const PlayerList = () => {
   const dispatch = useDispatch();
-  const { localId } = useSelector((state) => state.localId);
   const { players } = useSelector((state) => state.players);
   const { lifecycle } = useSelector((state) => state.lifecycle);
   const activePlayer = useSelector(activePlayerSelector);
+  const { localId } = useSelector((state) => state.localId);
+
+  const playerDetails = (player, hideWord = true) => {
+    if (player.id === localId && hideWord) {
+      return `${player.name} (*****)`;
+    } else {
+      return `${player.name} (${player.word})`;
+    }
+  };
 
   const listFromLifeCycle = () => {
     switch (lifecycle) {
       case "GET_PLAYERS": {
         return (
-          <div>
+          <S.GetPlayers>
             {players.map((player, index) => (
               <li key={index}>{player.name}</li>
             ))}
-          </div>
+          </S.GetPlayers>
         );
       }
       case "WRITE_WORDS": {
@@ -60,17 +68,24 @@ const PlayerList = () => {
             {players.map((player, index) => {
               let status;
               if (player.hasGuessed) {
-                status = "Finished!";
+                return (
+                  <li key={index}>
+                    <S.Guessed>
+                      {playerDetails(player, false)} {"✔️"}
+                    </S.Guessed>
+                  </li>
+                );
               } else if (player.id === activePlayer.id) {
-                status = "Playing!";
+                return (
+                  <li key={index}>
+                    <S.ActivePlayer>
+                      {playerDetails(player)} {"👈"}
+                    </S.ActivePlayer>
+                  </li>
+                );
               } else {
-                status = "";
+                return <li key={index}>{playerDetails(player)}</li>;
               }
-              return (
-                <li key={index}>
-                  {player.name} {status}
-                </li>
-              );
             })}
           </div>
         );
@@ -80,7 +95,7 @@ const PlayerList = () => {
 
   return (
     <div>
-      <div> --- Players --- </div>
+      <div style={{ paddingLeft: "5px", paddingBottom: "5px" }}>PLAYERS</div>
       {listFromLifeCycle()}
     </div>
   );
