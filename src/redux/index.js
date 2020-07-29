@@ -66,12 +66,12 @@ const players = (state = { players: [] }, action) => {
       };
     }
     case "GUESSED_ANSWER": {
-      const { id } = action;
+      const { targetId } = action;
 
       const players = cloneDeep(state.players);
       const newPlayers = players.map((player) => {
         if (player.id === targetId) {
-          player.guessedAnswer = true;
+          player.hasGuessed = true;
         }
         return player;
       });
@@ -128,7 +128,7 @@ export const addPlayer = (name, id) =>
 /**
  * Advance the game's lifecycle
  * @param {*} stage
- * One of "GET_PLAYERS", "WRITE_WORDS", "PLAY"
+ * One of "GET_PLAYERS", "WRITE_WORDS", "PLAY", "GAME_OVER"
  */
 export const advanceLifecycle = (stage) =>
   remoteAction({
@@ -167,10 +167,10 @@ export const setTurn = (id) =>
     id,
   });
 
-export const guessedAnswer = (id) =>
+export const guessedAnswer = (targetId) =>
   remoteAction({
     type: "GUESSED_ANSWER",
-    id,
+    targetId,
   });
 
 // Selectors

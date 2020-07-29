@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { advanceLifecycle, setTurn } from "./redux/index";
+import { advanceLifecycle, setTurn, activePlayerSelector } from "./redux/index";
 
 const PlayerList = () => {
   const dispatch = useDispatch();
   const { localId } = useSelector((state) => state.localId);
   const { players } = useSelector((state) => state.players);
   const { lifecycle } = useSelector((state) => state.lifecycle);
+  const activePlayer = useSelector(activePlayerSelector);
 
   const listFromLifeCycle = () => {
     switch (lifecycle) {
@@ -47,6 +48,27 @@ const PlayerList = () => {
               return (
                 <li key={index}>
                   {emoji} {player.name}
+                </li>
+              );
+            })}
+          </div>
+        );
+      }
+      case "PLAY": {
+        return (
+          <div>
+            {players.map((player, index) => {
+              let status;
+              if (player.hasGuessed) {
+                status = "Finished!";
+              } else if (player.id === activePlayer.id) {
+                status = "Playing!";
+              } else {
+                status = "";
+              }
+              return (
+                <li key={index}>
+                  {player.name} {status}
                 </li>
               );
             })}

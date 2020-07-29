@@ -17,6 +17,12 @@ const App = () => {
         return <WriteWords />;
       case "PLAY":
         return <Play />;
+      case "GAME_OVER":
+        return (
+          <div>
+            Game over! <button>Play again</button>
+          </div>
+        );
       default:
         return <span>No lifecycle set!</span>;
     }

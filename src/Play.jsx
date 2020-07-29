@@ -1,6 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setTurn, activePlayerSelector } from "./redux/index";
+import {
+  setTurn,
+  activePlayerSelector,
+  guessedAnswer,
+  advanceLifecycle,
+} from "./redux/index";
 import PlayerList from "./PlayerList";
 
 const Play = () => {
@@ -19,28 +24,42 @@ const Play = () => {
 
   const localPlayerIsActive = localPlayer.id === activePlayer.id;
 
-  const handleNo = () => {
+  const endTurn = () => {
     const playerIndex = players.findIndex(
       (player) => player.id === activePlayer.id
     );
-    let nextPlayerIndex;
-    if (playerIndex < players.length - 1) {
-      nextPlayerIndex = playerIndex + 1;
-    } else {
-      nextPlayerIndex = 0;
+    const advanceIndex = (index) => {
+      return index < players.length - 1 ? index + 1 : 0;
+    };
+
+    let nextPlayerIndex = advanceIndex(playerIndex);
+
+    while (players[nextPlayerIndex].hasGuessed) {
+      nextPlayerIndex = advanceIndex(nextPlayerIndex);
     }
 
     dispatch(setTurn(players[nextPlayerIndex].id));
   };
 
-  const handleCorrectGuess = () => {};
+  const handleCorrectGuess = () => {
+    const remainingPlayerCount = players.filter((player) => {
+      return !player.hasGuessed;
+    }).length;
+
+    if (remainingPlayerCount === 1) {
+      dispatch(advanceLifecycle("GAME_OVER"));
+    } else {
+      dispatch(guessedAnswer(activePlayer.id));
+      endTurn();
+    }
+  };
 
   const turnDetails = () => {
     if (localPlayerIsActive) {
       return (
         <div>
           <div>It's your turn!</div>
-          <button onClick={handleNo}>I got a no</button>
+          <button onClick={endTurn}>I got a no</button>
           <button onClick={handleCorrectGuess}>I guessed the answer!</button>
         </div>
       );
