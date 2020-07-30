@@ -41,6 +41,13 @@ wss.on("connection", (ws) => {
   ws.send(JSON.stringify(remoteUpdate(store.getState())));
 });
 
-server.listen(4000, "127.0.0.1", function listening() {
+let port = 4000;
+let ip = "127.0.0.1";
+if (process.argv[2] !== undefined) {
+  port = 80;
+  ip = process.argv[2];
+}
+
+server.listen(port, ip, function listening() {
   console.log("Listening on %d", server.address().port);
 });
