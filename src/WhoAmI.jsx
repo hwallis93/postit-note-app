@@ -80,7 +80,7 @@ const WhoAmI = () => {
       <div
         style={{
           paddingLeft: "30px",
-          paddingTop: "10px",
+          paddingTop: "25px",
           paddingBottom: "5px",
         }}
       >

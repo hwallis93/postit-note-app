@@ -42,7 +42,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <S.Global>
       <div>
         <S.Title>THE POST-IT NOTE GAME</S.Title>
       </div>
@@ -54,7 +54,7 @@ const App = () => {
           <PlayerList />
         </S.Players>
       </div>
-    </div>
+    </S.Global>
   );
 };
 
