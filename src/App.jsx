@@ -41,6 +41,18 @@ const App = () => {
     }
   };
 
+  const showPlayers = () => {
+    if (lifecycle !== "GET_PLAYERS" && localId === "") {
+      return <span></span>;
+    } else {
+      return (
+        <S.Players>
+          <PlayerList />
+        </S.Players>
+      );
+    }
+  };
+
   return (
     <S.Global>
       <div>
@@ -49,11 +61,7 @@ const App = () => {
       <div>
         <S.Body>{activeComponent()}</S.Body>
       </div>
-      <div>
-        <S.Players>
-          <PlayerList />
-        </S.Players>
-      </div>
+      <div>{showPlayers()}</div>
     </S.Global>
   );
 };

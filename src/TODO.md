@@ -1,4 +1,4 @@
 # TODO
 
-- Make it look nice
-- Make the code look nice?
+- Hints in text boxes
+- Rejoin screen buttons work with many players

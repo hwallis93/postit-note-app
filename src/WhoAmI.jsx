@@ -43,11 +43,11 @@ const WhoAmI = () => {
       return (
         <S.FormWrapper>
           <form onSubmit={handleSubmit}>
-            <S.Heading>Name</S.Heading>
             <S.Entry>
               <S.Box
                 type="text"
                 value={text}
+                placeholder="Your name here"
                 onChange={(e) => setText(e.target.value)}
               />
               <span style={{ paddingLeft: "5px" }}></span>
@@ -79,9 +79,9 @@ const WhoAmI = () => {
       <div style={{ height: "40px" }}>{formOrGreeting()}</div>
       <div
         style={{
-          paddingLeft: "30px",
+          paddingLeft: "55px",
           paddingTop: "25px",
-          paddingBottom: "5px",
+          paddingBottom: "30px",
         }}
       >
         <button onClick={allPlayersIn}>All players in</button>

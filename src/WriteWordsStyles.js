@@ -16,7 +16,7 @@ export const Heading = styled.div``;
 export const Box = styled.input`
   border-radius: 100px;
   outline: none;
-  padding-left: 5px;
+  padding-left: 10px;
 `;
 export const Submit = styled.input`
   border-radius: 100px;

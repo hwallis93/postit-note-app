@@ -13,13 +13,13 @@ export const Body = styled.div`
   height: 120px;
   width: 100%;
   padding: 5px;
-  border-bottom: 1px solid grey;
 `;
 
 export const Players = styled.div`
   box-sizing: border-box;
   width: 100%;
   padding: 5px;
+  border-top: 1px solid grey;
 `;
 
 export const Global = styled.div`

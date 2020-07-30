@@ -42,26 +42,61 @@ const PlayerList = () => {
         return (
           <div>
             {players.map((player, index) => {
-              let emoji;
+              let isFinished;
+              let targetPlayer;
+              let activity;
+
               for (const p of players) {
                 if (player.id === p.author.id) {
-                  if (p.word === "") {
-                    emoji = "✏️";
-                  } else {
-                    emoji = "✅";
-                  }
-                  break;
+                  targetPlayer = p;
                 }
               }
-              return (
-                <li key={index}>
-                  {emoji} {player.name}
-                </li>
-              );
+
+              if (targetPlayer.word === "") {
+                isFinished = false;
+              } else {
+                isFinished = true;
+              }
+
+              if (!isFinished) {
+                activity = (
+                  <span>
+                    writing for{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {targetPlayer.name}
+                    </span>
+                    ...
+                  </span>
+                );
+              } else {
+                if (targetPlayer.id === localId) {
+                  activity = <span>wrote a word for you!</span>;
+                } else {
+                  activity = (
+                    <span>
+                      wrote{" "}
+                      <span style={{ fontWeight: "bold", color: "green" }}>
+                        {targetPlayer.word}
+                      </span>{" "}
+                      for <span>{targetPlayer.name}</span>
+                    </span>
+                  );
+                }
+              }
+
+              const emoji = isFinished ? "✔️" : "✏️";
+
+              if (player)
+                return (
+                  <li key={index}>
+                    {emoji} {player.name}: {activity}
+                  </li>
+                );
             })}
           </div>
         );
       }
+      case "GAME_OVER":
       case "PLAY": {
         return (
           <div>

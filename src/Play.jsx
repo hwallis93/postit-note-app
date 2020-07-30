@@ -47,6 +47,7 @@ const Play = () => {
     }).length;
 
     if (remainingPlayerCount === 1) {
+      dispatch(guessedAnswer(activePlayer.id));
       dispatch(advanceLifecycle("GAME_OVER"));
     } else {
       dispatch(guessedAnswer(activePlayer.id));
