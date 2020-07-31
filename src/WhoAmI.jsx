@@ -51,13 +51,31 @@ const WhoAmI = () => {
                 onChange={(e) => setText(e.target.value)}
               />
               <span style={{ paddingLeft: "5px" }}></span>
-              <S.Submit type="submit" value="Play" />
+              <S.Submit type="submit" value="Join" />
             </S.Entry>
           </form>
         </S.FormWrapper>
       );
     } else {
-      return <span>Hello {localPlayer?.name}!</span>;
+      return (
+        <div>
+          <span>Hello {localPlayer?.name}!</span>{" "}
+          <div
+            style={{
+              paddingLeft: "5px",
+              paddingTop: "55px",
+              paddingBottom: "5px",
+            }}
+          >
+            <button
+              style={{ backgroundColor: "#a1eb42" }}
+              onClick={allPlayersIn}
+            >
+              Start game with these players
+            </button>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -77,15 +95,6 @@ const WhoAmI = () => {
   return (
     <S.Wrapper>
       <div style={{ height: "40px" }}>{formOrGreeting()}</div>
-      <div
-        style={{
-          paddingLeft: "55px",
-          paddingTop: "25px",
-          paddingBottom: "30px",
-        }}
-      >
-        <button onClick={allPlayersIn}>All players in</button>
-      </div>
     </S.Wrapper>
   );
 };
